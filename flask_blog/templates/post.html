@@ -3,7 +3,24 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
-    <a href="{{ url_for('index') }}">Back to Home</a>
+    <article class="bg-white shadow-md rounded-lg p-6">
+        <h1 class="text-4xl font-bold mb-4 text-gray-800">{{ post.title }}</h1>
+        <div class="prose max-w-none text-gray-700">
+            {{ post.content|safe }} {# Assuming content might have HTML, use safe if it's trusted #}
+        </div>
+        <div class="mt-4 text-sm text-gray-500">
+            <p>Views: {{ post.views }} | Likes: {{ post.likes }}</p>
+        </div>
+        <div class="mt-6 flex items-center space-x-4">
+            <a href="{{ url_for('like_post', post_id=post.id) }}" 
+               class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                Like this post
+            </a>
+        </div>
+        <div class="mt-8">
+            <a href="{{ url_for('index') }}" class="text-blue-600 hover:text-blue-800 hover:underline">
+                &larr; Back to Home
+            </a>
+        </div>
+    </article>
 {% endblock %}

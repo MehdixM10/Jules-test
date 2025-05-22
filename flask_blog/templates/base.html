@@ -4,22 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Blog{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('create_post') }}">Create Post</a></li>
-        </ul>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    <nav class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ url_for('index') }}" class="text-xl font-bold hover:text-gray-300">My Blog</a>
+            <ul class="flex space-x-4">
+                <li><a href="{{ url_for('index') }}" class="hover:text-gray-300">Home</a></li>
+                <li><a href="{{ url_for('create_post') }}" class="hover:text-gray-300">Create Post</a></li>
+            </ul>
+        </div>
     </nav>
-    <hr>
-    <div class="content">
+    
+    <div class="container mx-auto mt-8 p-4">
         {% block content %}{% endblock %}
     </div>
-    <hr>
-    <footer>
-        <p>&copy; 2024 My Blog</p>
+    
+    <footer class="bg-gray-700 text-white text-center p-4 mt-8">
+        <p>&copy; 2024 My Blog. All rights reserved.</p>
     </footer>
 </body>
 </html>

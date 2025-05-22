@@ -3,16 +3,40 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Blog Posts</h1>
-    {% if posts %}
-        <ul>
-            {% for post in posts %}
-                <li>
-                    <h2><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No posts yet. <a href="{{ url_for('create_post') }}">Create one!</a></p>
-    {% endif %}
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-700">Blog Posts</h1>
+            <div class="flex space-x-2">
+                <a href="{{ url_for('index') }}" 
+                   class="px-3 py-1 rounded-md text-sm font-medium
+                          {% if not current_sort %}bg-blue-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %}">
+                    Default
+                </a>
+                <a href="{{ url_for('index', sort='likes') }}" 
+                   class="px-3 py-1 rounded-md text-sm font-medium
+                          {% if current_sort == 'likes' %}bg-blue-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %}">
+                    Most Liked
+                </a>
+                <a href="{{ url_for('index', sort='views') }}" 
+                   class="px-3 py-1 rounded-md text-sm font-medium
+                          {% if current_sort == 'views' %}bg-blue-600 text-white{% else %}bg-gray-200 text-gray-700 hover:bg-gray-300{% endif %}">
+                    Most Viewed
+                </a>
+            </div>
+        </div>
+        {% if posts %}
+            <ul class="space-y-4">
+                {% for post in posts %}
+                    <li class="border-b border-gray-200 pb-4 last:border-b-0 last:pb-0">
+                        <h2 class="text-2xl font-semibold">
+                            <a href="{{ url_for('post', post_id=post.id) }}" class="text-blue-600 hover:text-blue-800 hover:underline">{{ post.title }}</a>
+                        </h2>
+                        <p class="text-xs text-gray-500 mt-1">Likes: {{ post.likes }} | Views: {{ post.views }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-600">No posts yet. <a href="{{ url_for('create_post') }}" class="text-blue-600 hover:underline">Create one!</a></p>
+        {% endif %}
+    </div>
 {% endblock %}
